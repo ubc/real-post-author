@@ -65,13 +65,20 @@ Class Real_Post_Author_Meta_Box {
 	 * @param mixed $link
 	 * @return void
 	 */
-	function the_author_link($link) {
- 		global $post;
- 		$custom_field = get_post_meta( $post->ID, '_real_post_author' , true );
- 		if( !empty($custom_field) )
- 			return get_permalink($post->ID);
+	public function the_author_link( $link ) {
 
- 		return $link;
+		global $post;
+		if ( ! is_a( $post, 'WP_Post' ) ) {
+			return $link;
+		}
+
+		$custom_field = get_post_meta( $post->ID, '_real_post_author', true );
+
+		if ( ! empty( $custom_field ) ) {
+			return get_permalink( $post->ID );
+		}
+
+		return $link;
 	}
 
 	// ADMIN SIDE
